@@ -1,0 +1,40 @@
+{
+  "name": "cards",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@craco/craco": "latest",
+    "firebase": "latest",
+    "react": "alpha",
+    "react-dom": "alpha",
+    "react-scripts": "latest"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.8.8",
+    "postcss": "^7.0.39",
+    "serve": "latest",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
+  }
+}
