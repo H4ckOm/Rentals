@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import { useHistory } from "react-router";
 import getInfo from "./firebase";
 import { connect } from "react-redux";
 import DetailCard from "./DetailCard";
@@ -94,7 +93,6 @@ const App = (props) => {
     );
 };
 const mapStateToProps = (state) => ({
-    // console.log("state",state)
     product: state,
 });
 
