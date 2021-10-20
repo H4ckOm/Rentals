@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
+import { useHistory } from "react-router";
 import getInfo from "./firebase";
+import { connect } from "react-redux";
+import DetailCard from "./DetailCard";
 
 const Card = ({ address, availablefrom, beds, image, range, saveup, tags }) => (
     <div className="overflow-hidden relative max-w-xs rounded-xl shadow-xl">
-        <img className="w-full" src={image} alt="" />
+        <a href={`/${address}`}>
+            <img className="w-full" src={image} alt="" />
+        </a>
         <button className="absolute top-3 right-3 p-1 text-green-500 bg-white rounded-full shadow group">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -58,22 +64,38 @@ const Card = ({ address, availablefrom, beds, image, range, saveup, tags }) => (
     </div>
 );
 
-const App = () => {
+const App = (props) => {
     const [info, setInfo] = useState([]);
-
-    useEffect(() => {
-        getInfo().then((list) => setInfo([...list]));
+    useEffect(async () => {
+        const response = await getInfo();
+        setInfo(response);
+        props.dispatch({ type: "add", value: response });
     }, []);
 
     return (
-        <div className="flex justify-center m-6">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {info.map((card) => (
-                    <Card {...card} key={card.address} />
-                ))}
-            </div>
-        </div>
+        <Router>
+            <Switch>
+                <Route exact path="/">
+                    <div className="flex justify-center m-6">
+                        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                            {info?.map((card) => (
+                                <>
+                                    <Card {...card} key={card.address} />
+                                </>
+                            ))}
+                        </div>
+                    </div>
+                </Route>
+                <Route exact path="/:address">
+                    <DetailCard />
+                </Route>
+            </Switch>
+        </Router>
     );
 };
+const mapStateToProps = (state) => ({
+    // console.log("state",state)
+    product: state,
+});
 
-export default App;
+export default connect(mapStateToProps)(App);
